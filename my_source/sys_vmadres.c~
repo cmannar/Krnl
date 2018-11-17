@@ -1,0 +1,42 @@
+/*
+Candace Mannar
+Project 3, Part 2
+
+Notes: Use page descriptor page defined in mm_types.h that contains inforamtion about the page. pgd_offset takes a virtual address and the mm_struct returns the PGD entry for the requested address. pud_offset takes a PGD entry and an address and returns the releveant PUD entry. pmd_offset takes a PUD entry and an address and returns the relevant PMD entry. pte_offset(pmd,address). pgd_offset to get the pgd
+*/
+#include <linux/kernel.h>
+#include <linux/sched.h>
+#include <asm/page.h>
+#include <asm/pgtable.h>
+#include <linux/mm_types.h>
+
+asmlinkage int sys_vmadres(int pid, unsigned long mem)
+{
+	//unsigned long mem;
+	int data=0;
+	int ref=0;
+	
+	struct task_struct *task=find_task_by_vpid(pid);
+	struct mm_struct *memory=task->active_mm;
+	
+	pgd_t *pgd=pgd_offset(memory,mem);
+	pud_t *pud=pud_offset(pgd,mem);
+	pmd_t *pmd=pmd_offset(pud,mem);
+	pte_t *ptep=pte_offset_kernel(pmd,mem);
+	
+	pte_t pte=*ptep;
+	data=pte_present(pte);
+
+	printk("-- -- -- -- --\n");
+	printk("Assignment 3, Part 2");
+	printk("-- -- -- -- --\n");
+
+	printk("The current status of the address: \n");
+	printk("	-->%i\n ", data?1:0);
+
+	ref=pte_young(pte);
+	printk("THe current address is referenced: \n");
+	printk("	-->%i\n", ref?1:0);
+	
+	return 0;
+}// end of main
