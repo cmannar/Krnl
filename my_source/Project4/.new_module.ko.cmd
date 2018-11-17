@@ -1,0 +1,1 @@
+cmd_/home/cmannar/Desktop/linux-2.6.32/my_source/Project4/new_module.ko := ld -r -m elf_i386 -T /home/cmannar/Desktop/linux-2.6.32/scripts/module-common.lds --build-id -o /home/cmannar/Desktop/linux-2.6.32/my_source/Project4/new_module.ko /home/cmannar/Desktop/linux-2.6.32/my_source/Project4/new_module.o /home/cmannar/Desktop/linux-2.6.32/my_source/Project4/new_module.mod.o
