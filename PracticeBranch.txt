@@ -1,0 +1,4 @@
+Practicing branching with github
+- git checkout -b name
+   - Combines git branch name AND git checkout name
+
